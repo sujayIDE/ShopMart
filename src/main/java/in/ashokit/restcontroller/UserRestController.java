@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "*")
 public class UserRestController {
 
     @Autowired
@@ -61,13 +62,15 @@ public class UserRestController {
     }
 
     @PostMapping("/userLogin")
-    public ResponseEntity<Boolean> handleLogin(@RequestBody User user){
-        boolean useredLogin = userService.userLogin(user);
-        if(useredLogin)
-        {
-            return new ResponseEntity<>(true,HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Long> handleLogin(@Valid @RequestBody User user) {
+
+        User loggedInUser = userService.userLogin(user);
+
+        if (loggedInUser != null) {
+            return new ResponseEntity<>(
+                    loggedInUser.getUserId(), HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

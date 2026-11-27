@@ -18,8 +18,12 @@ public class User {
     @NotBlank(message = "Username is required")
     private String userName;
 
-    @NotBlank(message = "email is required")
-    @Email(message = "please enter valid email address")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
+    @Pattern(
+            regexp = "^[A-Za-z0-9._%+-]+@(gmail\\.com|yahoo\\.com|outlook\\.com)$",
+            message = "Email must end with @gmail.com, @yahoo.com or @outlook.com"
+    )
     private String userEmail;
 
     @NotBlank(message = "password is required")

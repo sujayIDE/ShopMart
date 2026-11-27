@@ -16,7 +16,7 @@ public class UserService {
 
     public User saveUser(User user)
     {
-       return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public User updateUser(Long id, User user)
@@ -48,21 +48,18 @@ public class UserService {
         }
     }
 
-    public boolean userLogin(User user)
-    {
-        User byUserEmail = userRepository.findByUserEmail(user.getUserEmail());
-        if(byUserEmail!=null)
-        {
-            if(byUserEmail.getUserPassword().equals(user.getUserPassword()))
-            {
-                return true;
-            }else{
-                return false;
-            }
+    public User userLogin(User user) {
+
+        User byUserEmail =
+                userRepository.findByUserEmail(user.getUserEmail());
+
+        if (byUserEmail != null &&
+                byUserEmail.getUserPassword().equals(user.getUserPassword())) {
+
+            return byUserEmail;
         }
-        else{
-            return false;
-        }
+
+        return null;
     }
 
 
